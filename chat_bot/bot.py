@@ -8,8 +8,8 @@ from database.database import BotDatabase
 user = "postgres"
 password = "10011992"
 host = "127.0.0.1"
-port = "5433"
-settings = dict(one_time=False, inline=False)
+port = "5432"
+settings = dict(one_time=False, inline=True)
 
 class VkBot:
     def __init__(self, api_token, group_id, server_name: str = "Empty"):
@@ -33,7 +33,6 @@ class VkBot:
             """SELECT NAME FROM CATEGORY"""
         )
         main_keyboard = make_keyboard(settings, main_button_name)
-        f_toggle: bool = False
         for event in self.long_poll.listen():  # Слушаем сервер
             print(event)
             if event.type == VkBotEventType.MESSAGE_NEW:
@@ -44,15 +43,27 @@ class VkBot:
                             random_id=get_random_id(),
                             peer_id=event.obj.message['from_id'],
                             keyboard=main_keyboard.get_keyboard(),
-                            message=event.obj.message['text'],
+                            message='Выберите категорию',
                         )
             elif event.type == VkBotEventType.MESSAGE_EVENT:
-                if event.object.payload.get('type') == 'section1':
+                print(event.type)
+                print(event.object.payload.get('type'))
+                if event.object.payload.get('type') != 'main':
+                    print(event)
+                    print(event.object.payload.get('type'))
+                    cetegory_keyboard = make_keyboard(
+                        settings,
+                        bot_database.get_data(
+                            database_name,
+                            """SELECT NAME FROM Products""",
+                        ),
+                        event.object.payload.get('type')
+                        )
+                    print(event.object)
                     self.vk_api.messages.edit(
                         peer_id=event.obj.peer_id,
                         message='ola',
                         conversation_message_id=event.obj.conversation_message_id,
-                        keyboard=(keyboard_one if f_toggle else keyboard_two).get_keyboard(),
+                        keyboard=(main_keyboard if event.object.payload.get('type') == 'mine' else cetegory_keyboard).get_keyboard(),
                         message_id=event.obj.id,
                     )
-                    f_toggle = not f_toggle

@@ -90,11 +90,12 @@ class BotDatabase:
             connection = self.connection_to_database(database_name)
             cursor = connection.cursor()
             cursor.execute(select_query)
-            connection.commit()
+            record = cursor.fetchall()
             print("Данные успешно получены")
         except (Exception, Error) as error:
             print("Ошибка при работе с PostgreSQL", error)
         finally:
+            return record
             self.close_conection(connection, cursor)
 
 

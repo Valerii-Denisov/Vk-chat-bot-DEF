@@ -4,7 +4,7 @@ from database import BotDatabase
 user = "postgres"
 password = "10011992"
 host = "127.0.0.1"
-port = "5433"
+port = "5432"
 
 
 
@@ -38,3 +38,8 @@ def generate_bot_database():
                ('Kruasan blat', 2, 'pft,fkj', 'photo4'); 
                """
     )
+    print(bot_database.get_data(
+        database_name,
+    """select name from category"""))
+
+generate_bot_database()
