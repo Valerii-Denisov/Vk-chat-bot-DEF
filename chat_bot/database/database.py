@@ -13,10 +13,12 @@ class BotDatabase:
 
     def create_database(self, database_name):
         try:
-            connection = psycopg2.connect(user="postgres",
-                                          password="10011992",
-                                          host="127.0.0.1",
-                                          port="5433")
+            connection = psycopg2.connect(
+                user=self.user,
+                password=self.password,
+                host=self.host,
+                port=self.port,
+            )
             connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
             cursor = connection.cursor()
             sql_create_database = 'CREATE DATABASE {0}'.format(database_name)
@@ -34,10 +36,13 @@ class BotDatabase:
 
     def connection_to_database(self, database_name):
         try:
-            connection = psycopg2.connect(user="postgres",
-                                          password="10011992",
-                                          host="127.0.0.1",
-                                          port="5433")
+            connection = psycopg2.connect(
+                user=self.user,
+                password=self.password,
+                host=self.host,
+                port=self.port,
+                database=database_name,
+            )
         except (Exception, Error) as error:
             print(
                 'Ошибка при подключении к базе данных {0}'.format(
@@ -74,7 +79,7 @@ class BotDatabase:
             cursor = connection.cursor()
             cursor.execute(insert_query)
             connection.commit()
-            print("Таблица успешно создана в PostgreSQL")
+            print("Таблица успешно заполнена в PostgreSQL")
         except (Exception, Error) as error:
             print("Ошибка при работе с PostgreSQL", error)
         finally:
