@@ -5,11 +5,6 @@ from vk_api.utils import get_random_id
 from keyboard import make_keyboard
 from database.database_processor import Categories, Products
 
-db_user = "postgres"
-db_password = "10011992"
-db_host = "127.0.0.1"
-db_port = "5432"
-db_name = 'bakery_db'
 settings = dict(one_time=True, inline=False)
 
 
@@ -24,7 +19,6 @@ class VkBot:
         main_button_name = [category.name for category in Categories.select()]
         main_keyboard = make_keyboard(settings, main_button_name)
         for event in self.long_poll.listen():
-            print(event)
             if event.type == VkBotEventType.MESSAGE_NEW:
                 if event.obj.message['text'] != '':
                     if event.from_user:
@@ -62,7 +56,6 @@ class VkBot:
                         message='Выберите категорию',
                     )
                 elif event.object.payload.get('type') == 'close':
-                    print('boom-boom')
                     self.vk_api.messages.send(
                         user_id=event.obj['user_id'],
                         random_id=get_random_id(),
@@ -71,8 +64,6 @@ class VkBot:
                         message='Для возобновления работы пришлите боту любое сообщение',
                     )
                 else:
-                    print('boom')
-                    print(event.object.payload.get('type'))
                     product = Products.get(
                         Products.name == event.object.payload.get('type'),
                     )
