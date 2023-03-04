@@ -80,9 +80,7 @@ class VkBot:
                         user_id=event.obj['user_id'],
                         random_id=get_random_id(),
                         peer_id=event.obj['peer_id'],
-                        message='{0} {1}'.format(
-                            product.foto,
-                            product.description,
-                        ),
+                        message=product.description,
                         keyboard=category_keyboard.get_keyboard(),
+                        attachment=product.foto,
                     )
