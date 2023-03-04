@@ -19,9 +19,10 @@ def make_keyboard(keyboard_settings, button_data, keyboard_type='mine'):
         keyboard.add_line()
         keyboard.add_callback_button(
             label='Назад',
-            color=VkKeyboardColor.NEGATIVE,
+            color=VkKeyboardColor.SECONDARY,
             payload={'type': 'mine'}
         )
+    keyboard.add_line()
     keyboard.add_callback_button(
         label='Завершить работу',
         color=VkKeyboardColor.NEGATIVE,
