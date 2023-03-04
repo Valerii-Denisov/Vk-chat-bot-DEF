@@ -23,6 +23,14 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "peewee"
+version = "3.16.0"
+description = "a little orm"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "psycopg2-binary"
 version = "2.9.5"
 description = "psycopg2 - Python-PostgreSQL Database Adapter"
@@ -79,12 +87,13 @@ vkstreaming = ["websocket-client"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "ebba54695747156525e2f30194213b8724c9bcd9188ef5de96e5f801559696c6"
+content-hash = "12b751bd3cdde8888c564491621b37ec75c53fb6b94c7c2e1fe677febea60ef8"
 
 [metadata.files]
 certifi = []
 charset-normalizer = []
 idna = []
+peewee = []
 psycopg2-binary = []
 requests = []
 urllib3 = []

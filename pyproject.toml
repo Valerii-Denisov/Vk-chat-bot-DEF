@@ -8,6 +8,7 @@ authors = ["Valerii-Denisov <klerk919191@gmail.com>"]
 python = "^3.10"
 vk-api = "^11.9.9"
 psycopg2-binary = "^2.9.5"
+peewee = "^3.16.0"
 
 [tool.poetry.dev-dependencies]
 
