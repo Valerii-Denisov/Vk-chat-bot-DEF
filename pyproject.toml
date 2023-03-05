@@ -1,16 +1,29 @@
 [tool.poetry]
 name = "vk_chat_bot_def"
 version = "0.1.0"
-description = ""
+description = "This project contains chat_bot for VK.com"
 authors = ["Valerii-Denisov <klerk919191@gmail.com>"]
+packages = [{ include = "chat_bots"}]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: Free for non-commercial use",
+    "Operating System :: POSIX",
+    "Programming Language :: Python",
+]
+repository = "https://github.com/Valerii-Denisov/Vk-chat-bot-DEF"
 
 [tool.poetry.dependencies]
 python = "^3.10"
 vk-api = "^11.9.9"
 psycopg2-binary = "^2.9.5"
 peewee = "^3.16.0"
+PyYAML = "^6.0"
 
 [tool.poetry.dev-dependencies]
+flake8 = "^6.0.0"
+
+[tool.poetry.scripts]
+chat_bot = "chat_bots.script.chat_bot:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

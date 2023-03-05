@@ -2,8 +2,8 @@ import vk_api.vk_api
 
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from vk_api.utils import get_random_id
-from keyboard import make_keyboard
-from database.database_processor import Categories, Products
+from chat_bots.keyboard import make_keyboard
+from chat_bots.database.database_processor import Categories, Products
 
 settings = dict(one_time=True, inline=False)
 
@@ -61,7 +61,7 @@ class VkBot:
                         random_id=get_random_id(),
                         peer_id=event.obj['peer_id'],
                         keyboard=main_keyboard.get_empty_keyboard(),
-                        message='Для возобновления работы пришлите боту любое сообщение',
+                        message='Для начала работы пришлите боту сообщение',
                     )
                 else:
                     product = Products.get(
