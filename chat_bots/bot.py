@@ -32,7 +32,9 @@ class VkBot:
             elif event.type == VkBotEventType.MESSAGE_EVENT:
                 category_button_name = [
                     product.name for product in Products.select().where(
-                        Products.category_id == event.object.payload.get('type')
+                        Products.category_id == event.object.payload.get(
+                            'type'
+                        ),
                     )]
                 if event.object.payload.get('type') in main_button_name:
                     category_keyboard = make_keyboard(
@@ -64,14 +66,26 @@ class VkBot:
                         message='Для начала работы пришлите боту сообщение',
                     )
                 else:
-                    product = Products.get(
-                        Products.name == event.object.payload.get('type'),
-                    )
-                    self.vk_api.messages.send(
-                        user_id=event.obj['user_id'],
-                        random_id=get_random_id(),
-                        peer_id=event.obj['peer_id'],
-                        message=product.description,
-                        keyboard=category_keyboard.get_keyboard(),
-                        attachment=product.foto,
-                    )
+                    try:
+                        keyboard = category_keyboard.get_keyboard()
+                    except(Exception, UnboundLocalError):
+                        self.vk_api.messages.send(
+                            user_id=event.obj['user_id'],
+                            random_id=get_random_id(),
+                            peer_id=event.obj['peer_id'],
+                            keyboard=main_keyboard.get_empty_keyboard(),
+                            message='Для начала работы пришлите '
+                                    'боту сообщение',
+                        )
+                    else:
+                        product = Products.get(
+                            Products.name == event.object.payload.get('type'),
+                        )
+                        self.vk_api.messages.send(
+                            user_id=event.obj['user_id'],
+                            random_id=get_random_id(),
+                            peer_id=event.obj['peer_id'],
+                            message=product.description,
+                            keyboard=keyboard,
+                            attachment=product.foto,
+                        )

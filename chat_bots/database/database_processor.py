@@ -3,6 +3,8 @@ from psycopg2 import Error
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from chat_bots.get_data import get_yaml_data
 from peewee import Model
+from peewee import PeeweeException
+from peewee import IntegrityError
 import peewee
 
 
@@ -31,7 +33,7 @@ def create_database(database_parameters):
         if connection:
             cursor.close()
             connection.close()
-            print('База данных создана. Соединение закрыто')
+            print('Соединение c PostgreSQL закрыто.')
 
 
 def get_connection(database_parameters):
@@ -76,16 +78,28 @@ def generate_bot_database(
     bot_database.create_tables(model_list)
     bot_database.connect()
     for category in category_list:
-        string = Categories(name=category)
-        string.save()
+        try:
+            string = Categories(name=category)
+            string.save()
+        except(Exception, IntegrityError) as error1:
+            print('Ошибка создания записи. Такая запись уже существует или '
+                  'неверно указан внешний ключ. Ошибка: {0}'.format(error1))
+        except(Exception, PeeweeException) as error2:
+            print('Ошибка базы данных. Ошибка {0}'.format(error2))
     for product in product_list:
-        string = Products(
-            name=product.get('name'),
-            description=product.get('description'),
-            foto=product.get('foto'),
-            category_id=product.get('category'),
-        )
-        string.save()
+        try:
+                string = Products(
+                    name=product.get('name'),
+                    description=product.get('description'),
+                    foto=product.get('foto'),
+                    category_id=product.get('category'),
+                )
+                string.save()
+        except(Exception, IntegrityError) as error1:
+            print('Ошибка создания записи. Такая запись уже существует или '
+                  'неверно указан внешний ключ. Ошибка: {0}'.format(error1))
+        except(Exception, PeeweeException) as error2:
+            print('Ошибка базы данных. Ошибка {0}'.format(error2))
     bot_database.close()
 
 
