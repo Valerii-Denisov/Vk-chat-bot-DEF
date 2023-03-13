@@ -1,1 +1,1 @@
-bot: python script.chat_bot.py
+bot: python chat_bots/script/chat_bot.py
