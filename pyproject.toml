@@ -13,11 +13,12 @@ classifiers = [
 repository = "https://github.com/Valerii-Denisov/Vk-chat-bot-DEF"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "3.10"
 vk-api = "^11.9.9"
 psycopg2-binary = "^2.9.5"
 peewee = "^3.16.0"
 PyYAML = "^6.0"
+python-statemachine = "^2.0.0"
 
 
 [tool.poetry.dev-dependencies]

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """The main script of the project."""
 
-from chat_bots.bot import VkBot
+from chat_bots import VkBot
 from chat_bots.get_data import get_yaml_data
 
 
