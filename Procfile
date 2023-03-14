@@ -1,1 +1,1 @@
-bot: make upgrade && make start
+bot: python chat_bots/script/chat_bot.py
